@@ -1,0 +1,32 @@
+{   
+   "name": "exandria",   
+   "title": "Exandria - A Resource Trove",   
+   "description": "A module that brings all the content created for the world of Exandria by discord.gg/ZK42rTt into foundry",   
+   "author": "Nekro Darkmoon",
+   "version": "0.0.1",
+   "minimumCoreVersion": "0.5.0",
+   "compatibleCoreVersion":"0.5.5",
+   "packs": [
+    {
+		"name": "magic-items",
+		"label": "Magic Items",
+		"path": "packs/magic-items.db",
+		"entity": "Item",
+		"module": "exandria"
+    },
+    {
+		"name": "npcs",
+		"label": "NPCs",
+		"path": "packs/npcs.db",
+		"entity": "Actor",
+		"module": "exandria"
+    },
+    {
+		"name": "maps",
+		"label": "Maps",
+		"path": "packs/maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+    }
+  ]
+ }
