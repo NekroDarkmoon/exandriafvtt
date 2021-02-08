@@ -8,26 +8,78 @@
   "compatibleCoreVersion":"0.7.9",
   "packs": [
   {
-	  "name": "magic-items",
-		"label": "Magic Items",
-		"path": "packs/magic-items.db",
-		"entity": "Item",
-		"module": "exandria"
-  },
-  {
 		"name": "npcs",
 		"label": "NPCs",
 		"path": "packs/npcs.db",
 		"entity": "Actor",
 		"module": "exandria"
   },
+
+  {
+	  "name": "magic-items",
+		"label": "Magic Items",
+		"path": "packs/magic-items.db",
+		"entity": "Item",
+		"module": "exandria"
+  },
+  
   {
 		"name": "maps",
 		"label": "Maps",
 		"path": "packs/maps.db",
 		"entity": "Scene",
 		"module": "exandria"
-  }],
+  },
+  {
+		"name": "menagerie-coast-maps",
+		"label": "Menagerie Coast Maps",
+		"path": "packs/menagerie-coast-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "marrow-valley-maps",
+		"label": "Marrow Valley Maps",
+		"path": "packs/marrow-valley-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "zemni-fields-maps",
+		"label": "Zemni Fields Maps",
+		"path": "packs/zemni-fields-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "greying-wildlands-maps",
+		"label": "Greying Wildlands Maps",
+		"path": "packs/greying-wildlands-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "eiselcross-maps",
+		"label": "Eiselcross Maps",
+		"path": "packs/eiselcross-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "wastes-of-xhorhas-maps",
+		"label": "Wastes of Xhorhas Maps",
+		"path": "packs/wastes-of-xhorhas-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  },
+  {
+		"name": "blightshore-maps",
+		"label": "Blightshore Maps",
+		"path": "packs/blightshore-maps.db",
+		"entity": "Scene",
+		"module": "exandria"
+  }
+  ],
   "dependecies": [],
   "languages": [
     {
