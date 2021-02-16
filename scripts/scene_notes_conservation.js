@@ -1,3 +1,61 @@
+async function rebuildNotes() {
+  // Bulk Fetch all scenes
+  const scenes = game.data.scenes;
+  console.log(scenes);
+
+  // Bulk fetch all journals
+  const journals = game.data.journal;
+  console.log(journals);
+
+  // If scene has flag then get uuid and search journals
+  for (let sindex = 0; sindex < scenes.length; sindex++) {
+    var updates = [];
+    let uuids = scenes[sindex].flags.exandria?.uuids;
+    if (uuids == undefined) {continue;}
+    for (let key in uuids){
+      if (uuids[key] == undefined) {continue;}
+      console.log(`Finding match for ${uuids[key]}`);
+      for (var jindex = 0; jindex < journals.length; jindex++) {
+        let muuids = journals[jindex].flags.exandria?.uuids;
+        if (muuids == undefined) {continue;}
+        if (muuids.includes(uuids[key])) {
+          console.log(`Match found ${journals[jindex].name}`);
+          updates.push({
+            _id: uuids[key],
+            entryId: journals[jindex]._id 
+          });
+        }
+      }
+    }    
+    console.log(updates);
+    let scene = game.scenes.get(scenes[sindex]._id);
+    await scene.updateEmbeddedEntity('Note', updates);
+  }
+}
+
+class ExandriaSettings extends FormApplication{
+    static get defaultOptions(){
+    const options = super.defaultOptions;
+    options.id = "rebuild-notes";
+    options.template = "modules/exandria/templates/rebuild-notes.html";
+    options.width = 500;
+    return options;
+  }
+
+  get title() {
+    return "Rebuild Notes";
+  }
+
+  /** @override */
+  async _updateObject(event, formData) {
+    // Do rebuild here
+    console.log("Exandria | Rebuilding Notes");
+    rebuildNotes();
+    console.log("Exandria | Notes Rebuilt");
+    return;
+  }
+}
+
 // On note creation set a Flag to both the scene and the note.
 Hooks.on('createNote', async function (scene, note) {
 
@@ -57,15 +115,17 @@ Hooks.on('deleteNote',  async (scene, note) => {
   } catch (error) {console.error(`Error in deleteing note flag. ${error}`);}
 });
 
-// On scene import retrieve flag from scene and match with flags from notes.
-
-// On match change note id to new entry id.
-
-// Add support for rebuilding scene links to notes
-
-
-
 // On start
-Hooks.on('init', () => {
-  console.log("Exandria | Ready");
+Hooks.on('init', async () => {
+  await game.settings.registerMenu('exandria', 'Menu', {
+    name: 'menu',
+    label: 'Rebuild Notes',
+    icon: 'fas fa-atlas',
+    scope: AudioWorkletNode,
+    config: true,
+    type: ExandriaSettings,
+    restricted: true
+  });
+
+ console.log("Exandria | Ready");
 });
