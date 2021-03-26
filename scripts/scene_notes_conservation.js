@@ -57,8 +57,10 @@ class ExandriaSettings extends FormApplication{
   async _updateObject(event, formData) {
     // Do rebuild here
     console.log("Exandria | Rebuilding Notes");
+    ui.notifications.info("Exandria | Rebuilding relationships. Please be patient, this might take a while.");
     rebuildNotes();
     console.log("Exandria | Notes Rebuilt");
+    ui.notifications.info("Exandria | Successfully rebuilt relationships.");
     return;
   }
 }

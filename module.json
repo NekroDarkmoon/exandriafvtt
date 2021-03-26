@@ -61,6 +61,11 @@
   "scripts": [
 	  "scripts/scene_notes_conservation.js"
   ],
+  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/module.json",
+  "url": "https://github.com/NekroDarkmoon/exandria",
+  "download": "",
   "licence": "LICENCE",
-  "readme": "README.md"
+  "bugs": "https://github.com/NekroDarkmoon/exandria/issues",
+  "readme": "https://github.com/NekroDarkmoon/exandria/blob/main/README.md",
+  "changelog": "https://github.com/NekroDarkmoon/exandria/releases"
  }
