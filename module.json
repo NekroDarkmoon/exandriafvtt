@@ -58,6 +58,9 @@
       "path": "lang/en.json"
     }
   ],
+  "scripts": [
+	  "scripts/scene_notes_conservation.js"
+  ],
   "licence": "LICENCE",
   "readme": "README.md"
  }
