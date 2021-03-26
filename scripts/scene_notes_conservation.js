@@ -1,3 +1,6 @@
+// =========================================================================
+//                              On start
+// =========================================================================
 async function rebuildNotes() {
   // Bulk Fetch all scenes
   const scenes = game.data.scenes;
@@ -33,6 +36,10 @@ async function rebuildNotes() {
   }
 }
 
+
+// =========================================================================
+//                              Settings
+// =========================================================================
 class ExandriaSettings extends FormApplication{
     static get defaultOptions(){
     const options = super.defaultOptions;
@@ -56,6 +63,12 @@ class ExandriaSettings extends FormApplication{
   }
 }
 
+
+
+// =========================================================================
+//                              Adding uuids
+// =========================================================================
+
 // On note creation set a Flag to both the scene and the note.
 Hooks.on('createNote', async function (scene, note) {
 
@@ -75,7 +88,7 @@ Hooks.on('createNote', async function (scene, note) {
   try {
     let journal = game.journal.get(note.entryId);
     let links = journal.data.flags.exandria;
-    if (links.uuids == undefined) {links = [uuid];}
+    if (links == undefined || links.uuids == undefined) {links = [uuid];}
     else {
       links = Array.from(links.uuids);
       links.push(uuid);
@@ -84,9 +97,15 @@ Hooks.on('createNote', async function (scene, note) {
     // Update 
     await journal.setFlag('exandria', 'uuids', links);
     console.log("Exandria | Created Journal flag.");
+
   } catch (error) {console.error(`Error in setting journal flag. ${error}`)}
 });
 
+
+
+// =========================================================================
+//                              Deleting uuids
+// =========================================================================
 
 // Delete flag from scene and journal.
 Hooks.on('deleteNote',  async (scene, note) => {
@@ -99,23 +118,64 @@ Hooks.on('deleteNote',  async (scene, note) => {
   try {
     await scene.setFlag('exandria', 'uuids', uuids);
     console.log("Exandria | Deleted Scene flag.");
-  } catch (error) {console.error(`Error in deleteing scene flag. ${error}`);}
+  } catch (error) {console.error(`Exandria | Error in deleteing scene flag. ${error}`);}
   
   // Delete from journal
   try {
     let journal = game.journal.get(note.entryId);
     let links = journal.getFlag('exandria', 'uuids');
+    if (links == undefined) {return;}
     if (links.includes(uuid)){
       links.splice(links.indexOf(uuid),1);
-    } else {console.error(`Error in deleteing journal flag.`);}
+    } else {console.error(`Exandria | Error in deleteing journal flag.`);}
 
     // Update
     await journal.setFlag('exandria', 'uuids', links);
     console.log("Exandria | Deleted Journal flag.");
-  } catch (error) {console.error(`Error in deleteing note flag. ${error}`);}
+  } catch (error) {console.error(`Exandria | Error in deleting journal flag. ${error}`);}
 });
 
-// On start
+// On scene delete remove ids from journals
+Hooks.on('deleteScene', async (scene) => {
+  let uuids = scene.getFlag('exandria', 'uuids');
+  let notes = scene.data.notes;
+  console.log(uuids);
+  console.log(notes);
+  console.log(scene);
+
+  for (let key in uuids) {
+    let noteID = key;
+    let journalID = null;
+    let uuid = uuids[key];
+    for (let index = 0; index < notes.length; index++) {
+      if (notes[index]._id == noteID) {journalID = notes[index].entryId;}
+    }
+
+    // Update journal flags
+    try {
+    journal = game.journal.get(journalID);
+    if (journal == null || journal == undefined) {return;}
+    let links = journal.getFlag('exandria', 'uuids');
+    if (links == undefined) {return;}
+    if (links.includes(uuid)){
+      links.splice(links.indexOf(uuid, 1));
+    } else {console.error(`Exandria | Error in deleting journal flag.`);}
+
+    await journal.setFlag('exandria', 'uuids', links);
+    console.log('Exandria | Deleted Journal Flag');
+  } catch (error) {
+    console.error(`Exandria | Error in deleting journal flags ${error}`);
+    continue;
+  }
+
+  } 
+
+});
+
+
+// =========================================================================
+//                              Initial Setup
+// =========================================================================
 Hooks.on('init', async () => {
   await game.settings.registerMenu('exandria', 'Menu', {
     name: 'menu',
