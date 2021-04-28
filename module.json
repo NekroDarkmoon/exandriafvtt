@@ -3,7 +3,7 @@
   "title": "Exandria - A Resource Trove",   
   "description": "A module that brings all the content created for the world of Exandria by discord.gg/ZK42rTt into foundry",   
   "author": "Nekro Darkmoon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minimumCoreVersion": "0.7.0",
   "compatibleCoreVersion":"0.7.9",
   "packs": [
@@ -68,9 +68,9 @@
     }
   ],
   "scripts": [],
-  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/module.json",
+  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/download/v0.0.2-alpha/module.json",
   "url": "https://github.com/NekroDarkmoon/exandria",
-  "download": "",
+  "download": "https://github.com/NekroDarkmoon/exandria/releases/download/v0.0.2-alpha/exandria.zip",
   "licence": "LICENCE",
   "bugs": "https://github.com/NekroDarkmoon/exandria/issues",
   "readme": "https://github.com/NekroDarkmoon/exandria/blob/main/README.md",
