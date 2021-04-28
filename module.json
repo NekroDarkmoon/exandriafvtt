@@ -68,9 +68,9 @@
     }
   ],
   "scripts": [],
-  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/download/v0.0.2-alpha/module.json",
+  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/module.json",
   "url": "https://github.com/NekroDarkmoon/exandria",
-  "download": "https://github.com/NekroDarkmoon/exandria/releases/download/v0.0.2-alpha/exandria.zip",
+  "download": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/exandria.zip",
   "licence": "LICENCE",
   "bugs": "https://github.com/NekroDarkmoon/exandria/issues",
   "readme": "https://github.com/NekroDarkmoon/exandria/blob/main/README.md",
