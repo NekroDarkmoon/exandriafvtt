@@ -9,48 +9,57 @@
   "packs": [
   	{
 		"name": "npcs",
-		"label": "NPCs",
+		"label": "Exandria NPCs",
 		"path": "packs/npcs.db",
 		"entity": "Actor",
 		"module": "exandria"
   	},
   	{
 		"name": "magic-items",
-		"label": "Magic Items",
+		"label": "Exandria Magic Items",
 		"path": "packs/magic-items.db",
 		"entity": "Item",
 		"module": "exandria"
   	},  
   	{
 		"name": "maps",
-		"label": "Maps",
+		"label": "Exandria Maps",
 		"path": "packs/maps.db",
 		"entity": "Scene",
 		"module": "exandria"
   	},
 	{
 		"name": "locations",
-		"label": "Locations",
+		"label": "Exandria Locations",
 		"path": "packs/locations.db",
 		"entity": "JournalEntry",
 		"module": "exandria"
 	},
 	{
 		"name": "extras",
-		"label": "Extras",
+		"label": "Exandria Extras",
 		"path": "packs/extras.db",
 		"entity": "JournalEntry",
 		"module": "exandria"	
 	},
 	{
 		"name": "tables",
-		"lablel": "Tables",
+		"label": "Exandria Tables",
 		"path": "packs/tables.db",
 		"entity": "RollTable",
 		"module": "exandria"
 	}
   ],
-  "dependecies": [],
+  "dependecies": [
+    {
+      "name": "compendium-folders",
+      "manifest": "https://github.com/earlSt1/vtt-compendium-folders"
+    },
+    {
+      "name": "fxmaster",
+      "manifest": "https://gitlab.com/mesfoliesludiques/foundryvtt-fxmaster"
+    }
+  ],
   "languages": [
     {
       "lang": "en",
@@ -58,9 +67,7 @@
       "path": "lang/en.json"
     }
   ],
-  "scripts": [
-	  "scripts/scene_notes_conservation.js"
-  ],
+  "scripts": [],
   "manifest": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/module.json",
   "url": "https://github.com/NekroDarkmoon/exandria",
   "download": "",

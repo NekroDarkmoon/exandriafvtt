@@ -183,7 +183,7 @@ Hooks.on('init', async () => {
     name: 'menu',
     label: 'Rebuild Notes',
     icon: 'fas fa-atlas',
-    scope: AudioWorkletNode,
+   //  scope: AudioWorkletNode,
     config: true,
     type: ExandriaSettings,
     restricted: true
