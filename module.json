@@ -48,6 +48,13 @@
 		"path": "packs/tables.db",
 		"entity": "RollTable",
 		"module": "exandria"
+	},
+	{
+		"name": "misc",
+		"label": " Exandria Misc",
+		"path": "packs/misc.db",
+		"entity": "JournalEntry",
+		"module": "exandria"
 	}
   ],
   "dependecies": [
