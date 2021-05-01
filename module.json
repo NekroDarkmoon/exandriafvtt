@@ -3,7 +3,7 @@
   "title": "Exandria - A Resource Trove",   
   "description": "A module that brings all the content created for the world of Exandria by discord.gg/ZK42rTt into foundry",   
   "author": "Nekro Darkmoon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "minimumCoreVersion": "0.7.0",
   "compatibleCoreVersion":"0.7.9",
   "packs": [
