@@ -75,11 +75,11 @@
     }
   ],
   "scripts": [],
-  "manifest": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/module.json",
-  "url": "https://github.com/NekroDarkmoon/exandria",
-  "download": "https://github.com/NekroDarkmoon/exandria/releases/latest/download/exandria.zip",
+  "manifest": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/module.json",
+  "url": "https://github.com/NekroDarkmoon/exandriafvtt",
+  "download": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/exandria.zip",
   "licence": "LICENCE",
-  "bugs": "https://github.com/NekroDarkmoon/exandria/issues",
-  "readme": "https://github.com/NekroDarkmoon/exandria/blob/main/README.md",
-  "changelog": "https://github.com/NekroDarkmoon/exandria/releases"
+  "bugs": "https://github.com/NekroDarkmoon/exandriafvtt/issues",
+  "readme": "https://github.com/NekroDarkmoon/exandriafvtt/blob/main/README.md",
+  "changelog": "https://github.com/NekroDarkmoon/exandriafvtt/releases"
  }
