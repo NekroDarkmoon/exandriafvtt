@@ -43,6 +43,20 @@ Hooks.on('init', async () => {
         onChange: debounceReload
     });
 
+    await game.settings.register('exandriafvtt', 'current-season', {
+        name: 'Current Season',
+        scope: 'world',
+        config: true,
+        type: String,
+        choices: {
+            "spring": "Spring",
+            "summer": "Summer",
+            "autumn": "Autumn",
+            "winter": "Winter"
+        },
+        onChange: debounceReload
+    });
+
     // Generate Weather
     await game.settings.register('exandriafvtt', 'weather-generation', {
         name: 'Generate Daily Weather',
@@ -53,7 +67,7 @@ Hooks.on('init', async () => {
     });
 
 
-    console.log("Exandria | Ready")
+    console.log("ExandriaFvtt | Ready")
 });
 
 
