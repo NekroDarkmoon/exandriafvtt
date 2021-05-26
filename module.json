@@ -74,7 +74,9 @@
       "path": "lang/en.json"
     }
   ],
-  "scripts": [],
+  "scripts": [
+	  "scripts/init.js", "scripts/weather.js"
+  ],
   "manifest": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/module.json",
   "url": "https://github.com/NekroDarkmoon/exandriafvtt",
   "download": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/exandria.zip",
