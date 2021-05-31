@@ -10,12 +10,19 @@ Hooks.once('ready', async () => {
     try {
         const currentRegion = game.settings.get('exandriafvtt', 'current-region');
         const currentSeason = game.settings.get('exandriafvtt', 'current-season')
-    } catch (error) {
-        console.log(`ExandriaFvtt | Error in getting current location.${error}`)
-        ui.notification.error("ExandriaFvtt | There was an error in getting your curent region.");
-    }
 
-    // Get old weather or create new object
+        // Get old weather or create new object
+        var currentWeather;
+        let exisitngData = game.settings.get('exandriafvtt', 'current-weather');
+        if (Object.keys(exisitngData).length === 0 ) {
+            currentWeather = new Weather(currentRegion, currentSeason);
+        } else {currentWeather = exisitngData;}
+
+
+    } catch (error) {
+        console.error(`ExandriaFvtt | Error in getting current location.${error}`);
+        ui.notifications.error("ExandriaFvtt | There was an error in getting your curent region.");
+    }
 
 });
 
@@ -29,6 +36,7 @@ Hooks.once('ready', async () => {
 class Weather {
 
     constructor(currentRegion, currentSeason) {
+        this.set = true;
         this.region = currentRegion;
         this.season = currentSeason;
 
@@ -40,10 +48,11 @@ class Weather {
         // Get Previous data is exists
         let oldData = game.settings.get('exandriafvtt', 'current-weather')
         if (Object.keys(oldData).length === 0) {
-            // Default to 0
-            this.prevhumidity = 0;
-            this.prevtemp = 0;
-            this.prevprecip = 0;
+            // Default to -1
+            this.prevhumidity = -1;
+            this.prevtemp = -1;
+            this.prevprecip = -1;
+            let _ = this.setClimate(this.region);
 
         } else {
             // Fetch old data into new variables
@@ -56,22 +65,35 @@ class Weather {
 
     // Helper Functions
     // Random generator
-    randgen(min, max) {
+    randGen(min, max) {
         return Math.floor(min + ((max - min + 1) * Math.random()))
     }
 
     // Set Climate
     setClimate(region) {
         // Data values
+        // Based on New Zealand
         const region_mc = {
             spring: {
-                humidity: 0,
-                tempRange: {max: 0, min: 0},
+                humidity: 77.5,
+                tempRange: {max: 20, min: 15},
+                precip: 0.12 
+            },
+            summer: {
+                humidity: 78.3,
+                tempRange: {max: 25, min: 20},
                 precip: 0 
             },
-            summer: {},
-            fall: {},
-            winter: {}
+            fall: {
+                humidity: 84.8,
+                tempRange: {max: 25, min: 15},
+                precip: 0 
+            },
+            winter: {
+                humidity: 85.5,
+                tempRange: {max: 10, min: 15},
+                precip: 0 
+            }
         }
 
         const region_mv = {}
@@ -104,14 +126,48 @@ class Weather {
         
     };
     
+    genPrecip(humidity, temp) {
+        let weather = "";
+
+        
+
+        return weather;
+    }
+
     /**
      * 
      */
-    generateTemperature(){    };
-    generateWinds(){    };
-    generateHumidity(){     };
-    generatePrecipitation(){    };
+    genWeather() {
+        // Variables
+        let climate = this.climate;
 
+        // Generate naive humidity
+        let humidity = this.randGen(-6, 6);
+        humidity = humidity + climate[this.season]['humidity'];
+        
+        // Naive guessing attempt at generating weather
+        // TODO: Switch to a procedural approach
+        let temp = this.randGen(climate[this.season]['tempRange']['min'],
+                            climate[this.season]['tempRange']['max']);
+        
+        this.temp = temp;
+
+        // Derive precipitation and weather based on temp and humidity
+        let weather = this.genPrecip(humidity, temp);
+        
+    }
+
+    display() {
+        let recipient = ChatMessage.getWhisperRecipients("GM");
+        let message = `<b>${this.temp}°C </b> - Other Stuff goes here.`;
+
+        ChatMessage.create({
+           speaker: {alias: "Hupperdook Weather Station"},
+           whisper: recipient,
+           content: message 
+        });
+
+    }
 }
 
 // ------------------------------------------------------------------------
