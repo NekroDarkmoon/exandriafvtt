@@ -66,6 +66,13 @@ Hooks.on('init', async () => {
         defaut: false
     });
 
+    await game.settings.register('exandriafvtt', 'use-celsius', {
+        name: 'Use Celsius',
+        scope: 'world',
+        config: true,
+        type: Boolean
+    });
+
     await game.settings.register('exandriafvtt', 'current-weather', {
         name: 'Current Weather',
         scope: 'world',

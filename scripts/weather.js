@@ -13,15 +13,14 @@ Hooks.once('ready', async () => {
 
         // Get old weather or create new object
         var currentWeather;
-        let exisitngData = game.settings.get('exandriafvtt', 'current-weather');
-        if (Object.keys(exisitngData).length === 0 ) {
-            currentWeather = new Weather(currentRegion, currentSeason);
-        } else {currentWeather = exisitngData;}
+        currentWeather = new Weather(currentRegion, currentSeason);
 
+        currentWeather.genWeather();
+        game.settings.set('exandriafvtt', 'current-weather', currentWeather);
 
     } catch (error) {
         console.error(`ExandriaFvtt | Error in getting current location.${error}`);
-        ui.notifications.error("ExandriaFvtt | There was an error in getting your curent region.");
+        ui.notifications.error("ExandriaFvtt | There was an error in generating weather.");
     }
 
 });
@@ -72,29 +71,12 @@ class Weather {
     // Set Climate
     setClimate(region) {
         // Data values
-        // Based on New Zealand
         const region_mc = {
-            spring: {
-                humidity: 77.5,
-                tempRange: {max: 20, min: 15},
-                precip: 0.12 
-            },
-            summer: {
-                humidity: 78.3,
-                tempRange: {max: 25, min: 20},
-                precip: 0 
-            },
-            fall: {
-                humidity: 84.8,
-                tempRange: {max: 25, min: 15},
-                precip: 0 
-            },
-            winter: {
-                humidity: 85.5,
-                tempRange: {max: 10, min: 15},
-                precip: 0 
-            }
-        }
+            spring: {humidity: 1, tempRange: {max: 20, min: 15}, precip: 0},
+            summer: {humidity: 1, tempRange: {max: 25, min: 20}, precip: 1},
+            fall: {humidity: -1, tempRange: {max: 25, min: 15}, precip: 0},
+            winter: {humidity: -1, tempRange: {max: 10, min: 15}, precip: -1}
+        };
 
         const region_mv = {}
 
@@ -126,36 +108,38 @@ class Weather {
         
     };
     
-    genPrecip(humidity, temp) {
+    genPrecip(rainChance, temp) {
         let weather = "";
 
-        
+        if (rainChance <= 0) {
+
+        } 
 
         return weather;
     }
 
-    /**
-     * 
-     */
     genWeather() {
         // Variables
-        let climate = this.climate;
+        let season = this.climate[this.season];
 
         // Generate naive humidity
-        let humidity = this.randGen(-6, 6);
-        humidity = humidity + climate[this.season]['humidity'];
+        let rainChance = this.randGen(1, 6);
+        rainChance = rainChance + season['humidity'] + season['precip'];
         
         // Naive guessing attempt at generating weather
         // TODO: Switch to a procedural approach
-        let temp = this.randGen(climate[this.season]['tempRange']['min'],
-                            climate[this.season]['tempRange']['max']);
+        let temp = this.randGen(season['tempRange']['min'],
+                            season['tempRange']['max']);
         
         this.temp = temp;
 
         // Derive precipitation and weather based on temp and humidity
-        let weather = this.genPrecip(humidity, temp);
+        let weather = this.genPrecip(rainChance, temp);
+        
+        this.display();
         
     }
+
 
     display() {
         let recipient = ChatMessage.getWhisperRecipients("GM");
@@ -169,20 +153,4 @@ class Weather {
 
     }
 }
-
-// ------------------------------------------------------------------------
-//                              Imports 
-// ------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------
-//                              Imports 
-// ------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------
-//                              Imports 
-// ------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------
-//                              Imports 
-// ------------------------------------------------------------------------
 
