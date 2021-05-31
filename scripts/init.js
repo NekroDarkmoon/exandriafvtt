@@ -24,7 +24,7 @@ class ExandriaSettings extends FormApplication{
 // ------------------------------------------------------------------------
 Hooks.on('init', async () => {
     // Setup settings
-    // Scene Packer Settings
+    // Scene-packer Settings
     // Select current Region
     await game.settings.register('exandriafvtt', 'current-region', {
         name: 'Current Region',
@@ -66,6 +66,12 @@ Hooks.on('init', async () => {
         defaut: false
     });
 
+    await game.settings.register('exandriafvtt', 'current-weather', {
+        name: 'Current Weather',
+        scope: 'world',
+        config: false,
+        type: Object
+    });
 
     console.log("ExandriaFvtt | Ready")
 });
