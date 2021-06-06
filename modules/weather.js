@@ -12,27 +12,34 @@ export class Weather {
         this.region = currentRegion;
         this.season = currentSeason;
 
-        // Derived data object
-        this.humidity = 0;
-        this.temp = 0;
-        this.precip = 0;
-
-        // Get Previous data is exists
-        let oldData = game.settings.get('exandriafvtt', 'current-weather')
+        // Get previous data if exists
+        let oldData = game.settings.get('exandriafvtt', 'current-weather');
         if (Object.keys(oldData).length === 0) {
-            // Default to -1
-            this.prevhumidity = -1;
-            this.prevtemp = -1;
-            this.prevprecip = -1;
+            this.temp = -1;
             let _ = this.setClimate(this.region);
-
+        
         } else {
-            // Fetch old data into new variables
-            this.prevhumidity = oldData.humidity;
-            this.prevtemp = oldData.temp;
-            this.prevprecip = oldData.precip;
-            this.climate = oldData.climate;
+            // Fetch old data
+            this.temp = oldData.temp;
+            this.setClimate(this.region);
         }
+
+        // // Get Previous data is exists
+        // let oldData = game.settings.get('exandriafvtt', 'current-weather');
+        // if (Object.keys(oldData).length === 0) {
+        //     // Default to -1
+        //     this.prevhumidity = -1;
+        //     this.prevtemp = -1;
+        //     this.prevprecip = -1;
+        //     let _ = this.setClimate(this.region);
+
+        // } else {
+        //     // Fetch old data into new variables
+        //     this.prevhumidity = oldData.humidity;
+        //     this.prevtemp = oldData.temp;
+        //     this.prevprecip = oldData.precip;
+        //     this.climate = oldData.climate;
+        // }
    }
 
     // Helper Functions
@@ -67,9 +74,9 @@ export class Weather {
                 this.climate = weather_data.bs;
                 return weather_data.bs;
         }
-        
     };
     
+
     genPrecip(rainChance, temp) {
         let weather = "";
 
@@ -83,6 +90,7 @@ export class Weather {
     genWeather() {
         // Variables
         let season = this.climate[this.season];
+        console.log(season);
 
         // Generate naive humidity
         let rainChance = this.randGen(1, 6);

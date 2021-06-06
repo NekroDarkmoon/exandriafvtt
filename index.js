@@ -92,9 +92,7 @@ Hooks.once('ready', async () => {
 
         // Get old weather or create new object
         let currentWeather = new Weather(currentRegion, currentSeason);
-
-        await currentWeather.setClimate();
-        currentWeather.genWeather();
+        // currentWeather.genWeather();
         game.settings.set('exandriafvtt', 'current-weather', currentWeather);
 
     } catch (error) {
