@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------
 //                              Imports 
 // ------------------------------------------------------------------------
-
+import { Weather } from "./modules/weather.js";
 // ------------------------------------------------------------------------
 //                                 Constants 
 // ------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Hooks.on('init', async () => {
         choices: {
             "spring": "Spring",
             "summer": "Summer",
-            "autumn": "Autumn",
+            "fall": "Autumn",
             "winter": "Winter"
         },
         onChange: debounceReload
@@ -84,6 +84,21 @@ Hooks.on('init', async () => {
 });
 
 
-Hooks.on('ready', async () => {
-    // Check Dependencies
+Hooks.once('ready', async () => {
+    // Get Current Region
+    try {
+        const currentRegion = game.settings.get('exandriafvtt', 'current-region');
+        const currentSeason = game.settings.get('exandriafvtt', 'current-season')
+
+        // Get old weather or create new object
+        let currentWeather = new Weather(currentRegion, currentSeason);
+
+        await currentWeather.setClimate();
+        currentWeather.genWeather();
+        game.settings.set('exandriafvtt', 'current-weather', currentWeather);
+
+    } catch (error) {
+        console.error(`ExandriaFvtt | Error in getting current location.${error}`);
+        ui.notifications.error("ExandriaFvtt | There was an error in generating weather.");
+    }
 });

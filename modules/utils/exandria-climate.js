@@ -1,4 +1,4 @@
-{
+export const weather_data = {
     "mc": {
         "spring": {},
         "summer": {},
