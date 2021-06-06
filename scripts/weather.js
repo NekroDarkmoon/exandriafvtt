@@ -2,6 +2,9 @@
 //                              Imports 
 // ------------------------------------------------------------------------
 
+// Global Vars
+var currentWeather;
+
 // ------------------------------------------------------------------------
 //                         Constants and Hooks 
 // ------------------------------------------------------------------------
@@ -12,7 +15,6 @@ Hooks.once('ready', async () => {
         const currentSeason = game.settings.get('exandriafvtt', 'current-season')
 
         // Get old weather or create new object
-        var currentWeather;
         currentWeather = new Weather(currentRegion, currentSeason);
 
         currentWeather.genWeather();
@@ -22,7 +24,6 @@ Hooks.once('ready', async () => {
         console.error(`ExandriaFvtt | Error in getting current location.${error}`);
         ui.notifications.error("ExandriaFvtt | There was an error in generating weather.");
     }
-
 });
 
 // ------------------------------------------------------------------------
@@ -33,7 +34,6 @@ Hooks.once('ready', async () => {
 //                              Weather 
 // ------------------------------------------------------------------------
 class Weather {
-
     constructor(currentRegion, currentSeason) {
         this.set = true;
         this.region = currentRegion;
@@ -63,7 +63,8 @@ class Weather {
    }
 
     // Helper Functions
-    // Random generator
+    
+    
     randGen(min, max) {
         return Math.floor(min + ((max - min + 1) * Math.random()))
     }
