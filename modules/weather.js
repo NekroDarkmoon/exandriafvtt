@@ -7,6 +7,11 @@ import {weather_data} from "./utils/exandria-climate.js";
 //                              Weather 
 // ------------------------------------------------------------------------
 export class Weather {
+    /**
+     * Constructor
+     * @param {*} currentRegion 
+     * @param {*} currentSeason 
+     */
     constructor(currentRegion, currentSeason) {
         this.set = true;
         this.region = currentRegion;
@@ -33,14 +38,25 @@ export class Weather {
 
    }
 
+
     // Helper Functions
+    /**
+     * Random Number Generator
+     * @param {*} min 
+     * @param {*} max 
+     * @returns 
+     */
     randGen(min, max) {
         return Math.floor(min + ((max - min + 1) * Math.random()))
     }
 
-    // Set Climate
+
+    /**
+     * Set Climate
+     * @param {*} region 
+     * @returns 
+     */
     async setClimate(region) {
-        
         // Return based on case
         switch(region){
             case 'region_mc':
@@ -68,20 +84,20 @@ export class Weather {
     };
     
 
+    /**
+     * Generate New Weather Data
+     */
     genWeather() {
         // Variables
         let climateData = this.climate[this.season];
-        console.log(climateData);
         
         // TODO: Add support for weather events
 
         // Generate temperature
         let currTemp = this.getTemp(climateData); 
-        console.log(currTemp);
 
         // Generate humidity
         let humidity = this.getHumidity(climateData);
-        console.log(humidity);
 
         // Update object
         this.temp = currTemp;
@@ -92,11 +108,16 @@ export class Weather {
         this.precip = this.getPrecip(currTemp, humidity);
 
         // Display output
-        this.display();
+        this.sendToChat();
 
     }
 
 
+    /**
+     * Get new Temperature
+     * @param {*} climateData 
+     * @returns 
+     */
     getTemp(climateData) {
         // Variables
         let prevTemp = this.temp;
@@ -118,6 +139,11 @@ export class Weather {
     }
 
 
+    /**
+     * Get new Humidity
+     * @param {*} climateData 
+     * @returns 
+     */
     getHumidity(climateData) {
         // Varabiles
         let prevHumidity = this.humidity;
@@ -152,18 +178,22 @@ export class Weather {
     }
 
 
+    /**
+     * Get Precipitation Report
+     * @param {*} temp 
+     * @param {*} humidity 
+     * @returns 
+     */
     getPrecip(temp, humidity) {
         var weather = "";
         
         switch (true) {
             case (humidity <= 3):
                 weather = game.i18n.localize("ClearWeather");
-                console.log("exandria here")
                 break;
 
             case (humidity <= 6):
                 weather = game.i18n.localize("ScatteredClouds");
-                console.log("exandria here")
                 break;
 
             case (humidity === 7):
@@ -189,12 +219,14 @@ export class Weather {
                 break;
         }
 
-        console.log(weather);
         return weather;
     }
 
 
-    async display() {
+    /**
+     * Display Weather to chat
+     */
+    async sendToChat() {
         let recipient = ChatMessage.getWhisperRecipients("GM");
         let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
@@ -207,3 +239,11 @@ export class Weather {
     }
 }
 
+// ------------------------------------------------------------------------
+//                              Weather 
+// ------------------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------
+//                              Weather 
+// ------------------------------------------------------------------------
