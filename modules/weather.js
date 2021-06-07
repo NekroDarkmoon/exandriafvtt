@@ -242,7 +242,7 @@ export class Weather {
      * Display Weather to chat
      */
     async sendToChat() {
-        let recipients = ChatMessage.getWhisperRecipients("GM");
+        let recipients = ChatMessage.getWhisperRecipients("GM").map(user => user.id);
         let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
         ChatMessage.create({
