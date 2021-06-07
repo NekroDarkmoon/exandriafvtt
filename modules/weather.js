@@ -12,34 +12,26 @@ export class Weather {
         this.region = currentRegion;
         this.season = currentSeason;
 
-        // Get previous data if exists
-        let oldData = game.settings.get('exandriafvtt', 'current-weather');
-        if (Object.keys(oldData).length === 0) {
-            this.temp = -1;
-            let _ = this.setClimate(this.region);
-        
-        } else {
-            // Fetch old data
-            this.temp = oldData.temp;
-            this.setClimate(this.region);
-        }
+        this.temp = -1;
+        this.humidity = -1;
+        this.sHumidity = null;
+        this.setClimate(this.region) 
 
-        // // Get Previous data is exists
+        this.prevTemp = -1;
+        this.prevHumidity = -1;
+
+        // // Get previous data if exists
         // let oldData = game.settings.get('exandriafvtt', 'current-weather');
         // if (Object.keys(oldData).length === 0) {
-        //     // Default to -1
-        //     this.prevhumidity = -1;
-        //     this.prevtemp = -1;
-        //     this.prevprecip = -1;
+        //     this.temp = -1;
         //     let _ = this.setClimate(this.region);
-
+        
         // } else {
-        //     // Fetch old data into new variables
-        //     this.prevhumidity = oldData.humidity;
-        //     this.prevtemp = oldData.temp;
-        //     this.prevprecip = oldData.precip;
-        //     this.climate = oldData.climate;
+        //     // Fetch old data
+        //     this.temp = oldData.temp;
+        //     this.setClimate(this.region);
         // }
+
    }
 
     // Helper Functions
@@ -77,37 +69,80 @@ export class Weather {
     };
     
 
-    genPrecip(rainChance, temp) {
-        let weather = "";
-
-        if (rainChance <= 0) {
-
-        } 
-
-        return weather;
-    }
-
     genWeather() {
         // Variables
-        let season = this.climate[this.season];
-        console.log(season);
+        let climateData = this.climate[this.season];
+        console.log(climateData);
+        
+        // Generate temperature
+        let currTemp = this.getTemp(climateData); 
+        console.log(currTemp);
 
-        // Generate naive humidity
-        let rainChance = this.randGen(1, 6);
-        rainChance = rainChance + season['humidity'] + season['precip'];
-        
-        // Naive guessing attempt at generating weather
-        // TODO: Switch to a procedural approach
-        let temp = this.randGen(season['tempRange']['min'],
-                            season['tempRange']['max']);
-        
-        this.temp = temp;
+        // Generate humidity
+        let humidity = this.getHumidity(climateData);
+        console.log(humidity);
 
-        // Derive precipitation and weather based on temp and humidity
-        let weather = this.genPrecip(rainChance, temp);
+    }
+
+
+    getTemp(climateData) {
+        // Variables
+        let prevTemp = this.prevTemp;
+        var result;
+
+        // If no existing temp records create new data else do a relative change.
+        if (prevTemp === -1) {
+            result = this.randGen(climateData.tempmin, climateData.tempmax);
+            return result;
         
-        this.display();
+        } else {result = this.randGen((prevTemp - 3), (prevTemp + 3));}
+
+        // Check if temperature out of bounds
+        if ((result > climateData.tempmax) || (result < climateData.tempmin)) {
+            result = this.randGen(climateData.tempmin, climateData.tempmax);
+        }
+
+        return result;
+    }
+
+
+    getHumidity(climateData) {
+        // Varabiles
+        let prevHumidity = this.prevHumidity;
+        var result = this.randGen(1, 6); 
+        var seasonHumidity;
+        var climateHumidity;
         
+        // Get humidity level for season
+        let chance = climateData.rain + climateData.snow;
+
+        if (chance > 0.65) {seasonHumidity = 1;}
+        else if (chance < 0.35) {seasonHumidity = -1;}
+        else {seasonHumidity = 0;}
+
+        // Get humidity level for climate
+        let climate = this.climate;
+        let rain = climate?.spring.rain + climate?.summer.rain + climate?.fall.rain + climate?.winter.rain;
+        let snow = climate?.spring.snow + climate?.summer.snow + climate?.fall.snow + climate?.winter.snow;
+
+        if (rain == undefined || snow == undefined){chance = 0;}
+        else {chance = Math.floor((rain/4) + (snow/4));}
+
+        if (chance > 0.65) {climateHumidity = 1;}
+        else if (chance < 0.35) {climateHumidity = -1;}
+        else {climateHumidity = 0;}
+
+        // If no existing records
+        if (prevHumidity === -1) { result += seasonHumidity;} 
+        else { result += prevHumidity + seasonHumidity;}
+
+        return result;
+    }
+
+
+    genPrecip(rainChance, temp) {
+        let weather = "";
+        return weather;
     }
 
 
