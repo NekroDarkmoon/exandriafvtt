@@ -6,6 +6,7 @@ import { Weather } from "./modules/weather.js";
 //                                 Constants 
 // ------------------------------------------------------------------------
 const debounceReload = debounce(() => window.location.reload(), 100);
+var currentWeather;
 
 // ------------------------------------------------------------------------
 //                              Exandria Settings 
@@ -96,15 +97,32 @@ Hooks.once('ready', async () => {
     // Get Current Region
     try {
         const currentRegion = game.settings.get('exandriafvtt', 'current-region');
-        const currentSeason = game.settings.get('exandriafvtt', 'current-season')
-
+        const currentSeason = game.settings.get('exandriafvtt', 'current-season');
+        
         // Get old weather or create new object
-        let currentWeather = new Weather(currentRegion, currentSeason);
-        currentWeather.genWeather();
-        game.settings.set('exandriafvtt', 'current-weather', currentWeather);
+        currentWeather = new Weather(currentRegion, currentSeason);
+        
+        // Display Weather to both chat? and template
+        currentWeather.sendToChat();
+
+        console.log("Exandriafvtt | Ready.");
+
 
     } catch (error) {
         console.error(`ExandriaFvtt | Error in getting current location.${error}`);
         ui.notifications.error("ExandriaFvtt | There was an error in generating weather.");
+    }
+});
+
+
+Hooks.on('pseudoclockSet', async () => {
+    let now = Gametime.DTNow();
+    console.log(currentWeather);
+    let prev = currentWeather.lastUpdate;
+
+    if (now.days != prev.days) {
+        currentWeather.genWeather();
+        game.settings.set('exandriafvtt', 'current-weather', currentWeather);
+        console.log("Exandriafvtt | Weather Updated");
     }
 });

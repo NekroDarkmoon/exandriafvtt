@@ -13,19 +13,30 @@ export class Weather {
      * @param {*} currentSeason 
      */
     constructor(currentRegion, currentSeason) {
+        // Get previous data if exists
+        let oldData = game.settings.get('exandriafvtt', 'current-weather');
+        
+        // Drop data if region changed
+        if (Object.keys(oldData).length === 0){
+        if ((oldData.region != currentRegion) || oldData.season != currentRegion){
+            oldData = null;
+        }}
+
         this.set = true;
         this.region = currentRegion;
         this.season = currentSeason;
         this.setClimate(this.region);
         
-        // Get previous data if exists
-        let oldData = game.settings.get('exandriafvtt', 'current-weather');
+
         if (Object.keys(oldData).length === 0) {
             this.temp = -1;
             this.humidity = -1;
             this.precip = "";
             this.sHumidity = null;
             this.ftemp = -1;
+
+            this.lastUpdate = Gametime.DTNow();
+            this.genWeather();
 
         } else {
             // Fetch old data
@@ -34,6 +45,7 @@ export class Weather {
             this.precip = oldData.precip;
             this.sHumidity = oldData.sHumidity;
             this.ftemp = oldData.ftemp;
+            this.lastUpdate = oldData.lastUpdate;
         }
 
    }
@@ -172,7 +184,7 @@ export class Weather {
 
         // If no existing records
         if (prevHumidity === -1) { result += seasonHumidity + climateHumidity;} 
-        else { result += prevHumidity + seasonHumidity + climateHumidity;}
+        else { result += seasonHumidity + climateHumidity;}
 
         return result;
     }
@@ -193,6 +205,7 @@ export class Weather {
                 break;
 
             case (humidity <= 6):
+                this.humidity += 1;
                 weather = game.i18n.localize("ScatteredClouds");
                 break;
 
@@ -203,12 +216,14 @@ export class Weather {
                 break;
             
             case (humidity === 8):
+                this.humidity -= 1;
                 if (temp > 5) {weather = game.i18n.localize("LightRain");}
                 else if (temp > -1){weather = game.i18n.localize("LightMixed");}
                 else {weather = game.i18n.localize("LightSnow");}
                 break;
             
             case (humidity === 9):
+                this.humidity -= 2;
                 if (temp > 5) {weather = game.i18n.localize("HeavyRain");}
                 else if (temp > -1) {weather = game.i18n.localize("HeavyMixed");}
                 else {weather = game.i18n.localize("HeavySnow");}
@@ -227,13 +242,13 @@ export class Weather {
      * Display Weather to chat
      */
     async sendToChat() {
-        let recipient = ChatMessage.getWhisperRecipients("GM");
+        let recipients = ChatMessage.getWhisperRecipients("GM").map(u => u.id);
         let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
-        await ChatMessage.create({
+        ChatMessage.create({
            speaker: {alias: "Hupperdook Weather Station"},
-           whisper: recipient,
-           content: message 
+           whisper: recipients,
+           content: message,
         });
 
     }
