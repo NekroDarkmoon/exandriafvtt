@@ -1,1 +1,13 @@
-{}
+{
+    "ClearWeather": "Clear Skies today",
+    "ScatteredClouds": "Scatterd Clouds",
+    "OvercastDrizzle": "Overcast, possible drizzles", 
+    "OvercastMixed": "Overcast, possible freezing rain", 
+    "OvercastFlurries": "Overcast, possible flurries",
+    "LightMixed": "Light to moderate freezing rain",
+    "LightRain": "Light to moderate rain",
+    "LightSnow": "Light to moderate snow",
+    "HeavyRain": "Heavy rain", 
+    "HeavyMixed": "Heavy freezing rain",
+    "HeavySnow": "Heavy snow"
+}
