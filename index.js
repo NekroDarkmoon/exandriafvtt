@@ -73,6 +73,14 @@ Hooks.on('init', async () => {
         type: Boolean
     });
 
+    await game.settings.register('exandriafvtt', 'weather-events', {
+        name: 'Enable Weather Events [NOT IMPLEMENTED]',
+        scope: 'world',
+        config: true,
+        type: Boolean,
+        onChange: debounceReload
+    });
+
     await game.settings.register('exandriafvtt', 'current-weather', {
         name: 'Current Weather',
         scope: 'world',

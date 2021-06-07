@@ -14,11 +14,14 @@ export class Weather {
 
         this.temp = -1;
         this.humidity = -1;
+        this.precip = "";
         this.sHumidity = null;
         this.setClimate(this.region) 
 
         this.prevTemp = -1;
         this.prevHumidity = -1;
+        this.ftemp = -1;
+        this.prevPrecip = "";
 
         // // Get previous data if exists
         // let oldData = game.settings.get('exandriafvtt', 'current-weather');
@@ -74,6 +77,8 @@ export class Weather {
         let climateData = this.climate[this.season];
         console.log(climateData);
         
+        // TODO: Add support for weather events
+
         // Generate temperature
         let currTemp = this.getTemp(climateData); 
         console.log(currTemp);
@@ -81,6 +86,14 @@ export class Weather {
         // Generate humidity
         let humidity = this.getHumidity(climateData);
         console.log(humidity);
+
+        // Update object
+        this.prevTemp = currTemp;
+        this.prevHumidity = humidity;
+        this.ftemp = currTemp * (9/5) + 32;
+        
+        // Get precipitation
+        this.precip = this.getPrecip(currTemp, humidity);
 
     }
 
@@ -140,15 +153,48 @@ export class Weather {
     }
 
 
-    genPrecip(rainChance, temp) {
+    getPrecip(temp, humidity) {
         let weather = "";
+        
+        switch (humidity) {
+            case (humidity <= 3):
+                weather = game.i18n.localize("ClearWeather");
+                break;
+
+            case (humidity <= 6):
+                weather = game.i18n.localize("ScatteredClouds");
+                break;
+
+            case 7:
+                if (temp > 1) {weather = game.i18n.localize("OvercastDrizzle");}
+                else if (temp > -2) {weather = game.i18n.localize("OvercastMixed");}
+                else {weather = game.i18n.localize("OvercastFlurries")}
+                break;
+            
+            case 8:
+                if (temp > 5) {weather = game.i18n.localize("ModerateRain");}
+                else if (temp > 0){weather = game.i18n.localize("LightRain");}
+                else {weather = game.i18n.localize("LightSnow");}
+                break;
+            
+            case 9:
+                if (temp > 5) {weather = game.i18n.localize("HeavyRain");}
+                else if (temp > -1) {weather = game.i18n.localize("HeavyMixed");}
+                else {weather = game.i18n.localize("HeavySnow");}
+                break;
+            
+            case 100:
+                // TODO: IMPLEMENT WEATHER EVENTS
+                break;
+        }
+
         return weather;
     }
 
 
     display() {
         let recipient = ChatMessage.getWhisperRecipients("GM");
-        let message = `<b>${this.temp}°C </b> - Other Stuff goes here.`;
+        let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
         ChatMessage.create({
            speaker: {alias: "Hupperdook Weather Station"},
