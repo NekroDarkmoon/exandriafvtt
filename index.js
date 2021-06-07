@@ -33,13 +33,13 @@ Hooks.on('init', async () => {
         config: true,
         type: String,
         choices: {
-            "region_mc": "Menagerie Coast",
-            "region_mv": "Marrow Valley",
-            "region_zf": "Zemni Fields",
+            // "region_mc": "Menagerie Coast",
+            // "region_mv": "Marrow Valley",
+            // "region_zf": "Zemni Fields",
             "region_gw": "Greying Wildlands",
-            "region_es": "Eiselcross",
-            "region_wx": "Wastes of Xhorhas",
-            "region_bs": "Blightshore",
+            // "region_es": "Eiselcross",
+            // "region_wx": "Wastes of Xhorhas",
+            // "region_bs": "Blightshore",
         },
         onChange: debounceReload
     });
