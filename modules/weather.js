@@ -11,29 +11,25 @@ export class Weather {
         this.set = true;
         this.region = currentRegion;
         this.season = currentSeason;
-
-        this.temp = -1;
-        this.humidity = -1;
-        this.precip = "";
-        this.sHumidity = null;
-        this.setClimate(this.region) 
-
-        this.prevTemp = -1;
-        this.prevHumidity = -1;
-        this.ftemp = -1;
-        this.prevPrecip = "";
-
-        // // Get previous data if exists
-        // let oldData = game.settings.get('exandriafvtt', 'current-weather');
-        // if (Object.keys(oldData).length === 0) {
-        //     this.temp = -1;
-        //     let _ = this.setClimate(this.region);
+        this.setClimate(this.region);
         
-        // } else {
-        //     // Fetch old data
-        //     this.temp = oldData.temp;
-        //     this.setClimate(this.region);
-        // }
+        // Get previous data if exists
+        let oldData = game.settings.get('exandriafvtt', 'current-weather');
+        if (Object.keys(oldData).length === 0) {
+            this.temp = -1;
+            this.humidity = -1;
+            this.precip = "";
+            this.sHumidity = null;
+            this.ftemp = -1;
+
+        } else {
+            // Fetch old data
+            this.temp = oldData.temp;
+            this.humidity = oldData.humidity;
+            this.precip = oldData.precip;
+            this.sHumidity = oldData.sHumidity;
+            this.ftemp = oldData.ftemp;
+        }
 
    }
 
@@ -88,8 +84,8 @@ export class Weather {
         console.log(humidity);
 
         // Update object
-        this.prevTemp = currTemp;
-        this.prevHumidity = humidity;
+        this.temp = currTemp;
+        this.humidity = humidity;
         this.ftemp = currTemp * (9/5) + 32;
         
         // Get precipitation
@@ -103,7 +99,7 @@ export class Weather {
 
     getTemp(climateData) {
         // Variables
-        let prevTemp = this.prevTemp;
+        let prevTemp = this.temp;
         var result;
 
         // If no existing temp records create new data else do a relative change.
@@ -124,7 +120,7 @@ export class Weather {
 
     getHumidity(climateData) {
         // Varabiles
-        let prevHumidity = this.prevHumidity;
+        let prevHumidity = this.humidity;
         var result = this.randGen(1, 6); 
         var seasonHumidity;
         var climateHumidity;
@@ -198,11 +194,11 @@ export class Weather {
     }
 
 
-    display() {
+    async display() {
         let recipient = ChatMessage.getWhisperRecipients("GM");
-        let message = `<b>${this.prevTemp}°C </b> - ${this.precip}.`;
+        let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
-        ChatMessage.create({
+        await ChatMessage.create({
            speaker: {alias: "Hupperdook Weather Station"},
            whisper: recipient,
            content: message 
