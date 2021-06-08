@@ -1,6 +1,7 @@
 // ------------------------------------------------------------------------
 //                              Imports 
 // ------------------------------------------------------------------------
+import { moduleTag } from "./utils/constants.js";
 import {weather_data} from "./utils/exandria-climate.js";
 
 // ------------------------------------------------------------------------
@@ -9,25 +10,22 @@ import {weather_data} from "./utils/exandria-climate.js";
 export class Weather {
     /**
      * Constructor
-     * @param {*} currentRegion 
-     * @param {*} currentSeason 
      */
-    constructor(currentRegion, currentSeason) {
+    constructor() {
         // Get previous data if exists
         let oldData = game.settings.get('exandriafvtt', 'current-weather');
         
-        // Drop data if region changed
-        if (Object.keys(oldData).length === 0){
-        if ((oldData.region != currentRegion) || oldData.season != currentRegion){
-            oldData = null;
-        }}
+        // Set base data
+        try {
+            this.set = true;
+            this.region = game.settings.get('exandriafvtt', 'current-region');
+            this.season = game.settings.get('exandriafvtt', 'current-season');
+            this.setClimate(this.region);
+        } catch (error) {
+            console.error(`${moduleTag} | Error in constructor ${error}.`);
+        }
 
-        this.set = true;
-        this.region = currentRegion;
-        this.season = currentSeason;
-        this.setClimate(this.region);
-        
-
+        // Set derived data based on if old data exists
         if (Object.keys(oldData).length === 0) {
             this.temp = -1;
             this.humidity = -1;
@@ -119,9 +117,8 @@ export class Weather {
         // Get precipitation
         this.precip = this.getPrecip(currTemp, humidity);
 
-        // Display output
+        // Display output and save to settings.
         this.sendToChat();
-
     }
 
 
@@ -245,7 +242,7 @@ export class Weather {
         let recipients = ChatMessage.getWhisperRecipients("GM").map(user => user.id);
         let message = `<b>${this.temp}°C </b> - ${this.precip}.`;
 
-        ChatMessage.create({
+        await ChatMessage.create({
            speaker: {alias: "Hupperdook Weather Station"},
            whisper: recipients,
            content: message,
