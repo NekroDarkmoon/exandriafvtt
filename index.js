@@ -34,6 +34,7 @@ Hooks.once('ready', async () => {
         // Display Weather to both chat? and template
         currentWeather.sendToChat();
         await game.settings.set('exandriafvtt', 'current-weather', currentWeather);
+        updateWeather();
     }
 
     console.log("Exandriafvtt | Ready.");
@@ -42,14 +43,19 @@ Hooks.once('ready', async () => {
 
 
 // Generate new weather based on next day
-Hooks.on('pseudoclockSet', async () => {
-    let now = Gametime.DTNow();
-    console.log(currentWeather);
-    let prev = currentWeather.lastUpdate;
 
-    if (now.days != prev.days) {
-        currentWeather.genWeather();
-        game.settings.set('exandriafvtt', 'current-weather', currentWeather);
-        console.log("Exandriafvtt | Weather Updated");
-    }
-});
+function updateWeather() {
+    Hooks.on('pseudoclockSet', async () => {
+        let now = Gametime.DTNow();
+        console.log(currentWeather);
+        let prev = currentWeather.lastUpdate;
+        if (prev == undefined || prev == null) {return;}
+
+        if (now.days != prev.days) {
+            currentWeather.genWeather();
+            game.settings.set('exandriafvtt', 'current-weather', currentWeather);
+            console.log("Exandriafvtt | Weather Updated");
+        }
+    });
+}
+

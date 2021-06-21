@@ -4,8 +4,8 @@
   "description": "A module that brings all the content created for the world of Exandria by discord.gg/ZK42rTt into foundry",   
   "author": "Nekro Darkmoon",
   "version": "0.0.7",
-  "minimumCoreVersion": "0.8.5",
-  "compatibleCoreVersion":"0.8.6",
+  "minimumCoreVersion": "0.7.10",
+  "compatibleCoreVersion":"0.8.7",
   "packs": [
   	{
 		"name": "npcs",

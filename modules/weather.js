@@ -113,6 +113,7 @@ export class Weather {
         this.temp = currTemp;
         this.humidity = humidity;
         this.ftemp = currTemp * (9/5) + 32;
+        this.lastUpdate = Gametime.DTNow();
         
         // Get precipitation
         this.precip = this.getPrecip(currTemp, humidity);
