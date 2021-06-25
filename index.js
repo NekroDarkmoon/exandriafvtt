@@ -20,7 +20,7 @@ Hooks.on('init', async () => {
     // Register settings
     await RegisterSettings();
 
-    console.log(`${moduleTag} | Ready`);
+    console.log(`${moduleTag} | Initializing.`);
 });
 
 
