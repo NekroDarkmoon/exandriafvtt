@@ -1,11 +1,31 @@
 {   
-  "name": "exandriafvtt",   
+  "id": "exandria-fvtt",
   "title": "Exandria - A Resource Trove",   
   "description": "A module that brings all the content created for the world of Exandria by discord.gg/ZK42rTt into foundry",   
-  "author": "Nekro Darkmoon",
-  "version": "0.1.2",
-  "minimumCoreVersion": "0.7.9",
-  "compatibleCoreVersion":"0.8.8",
+  "version": "Auto Replaces",
+	"library": "false",
+	"authors": [
+    {
+      "name": "NekroDarkmoon",
+      "url": "https://github.com/NekroDarkmoon/",
+      "discord": "Nekro Darkmoon#2995",
+      "ko-fi": "https://ko-fi.com/nekrodarkmoon"
+    }
+  ],
+	"compatibility": {
+		"minimum": 10,
+    "verified": 10,
+    "maximum": 10
+	},
+	"relationships": {
+    "systems": [{
+      "id": "dnd5e",
+      "type": "system"
+    }],
+		"requires": [{
+			"id": "compendium-folders"
+		}]
+	},
   "packs": [
   	{
 		"name": "npcs",
@@ -78,11 +98,7 @@
 	  "./index.js"
   ],
   "scripts": [],
-  "manifest": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/module.json",
-  "url": "https://github.com/NekroDarkmoon/exandriafvtt",
-  "download": "https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/exandriafvtt.zip",
-  "licence": "LICENCE",
-  "bugs": "https://github.com/NekroDarkmoon/exandriafvtt/issues",
-  "readme": "https://github.com/NekroDarkmoon/exandriafvtt/blob/main/README.md",
-  "changelog": "https://github.com/NekroDarkmoon/exandriafvtt/releases"
+  "manifest": "Auto Replaced",
+  "url": "Auto Replaced",
+  "download": "Auto Replaced"
  }
