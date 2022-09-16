@@ -28,7 +28,7 @@ jobs:
           download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
 
       # Create a zip file with all files required by the module to add to the release
-      - run: zip -r ./exandria-fvtt.zip index.js module.json LICENSE modules/ lang/ packs/ scenes/ templates/
+      - run: zip -r ./module.zip index.js module.json LICENSE modules/ lang/ packs/ scenes/ templates/
 
       # Create a release for this specific version
       - name: Update Release with Files
@@ -40,6 +40,6 @@ jobs:
           draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './module.json, ./exandria-fvtt.zip'
+          artifacts: './module.json, ./module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
