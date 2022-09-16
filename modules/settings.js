@@ -1,16 +1,12 @@
 // ------------------------------------------------------------------------
 //                                  Imports
 // ------------------------------------------------------------------------
-import {moduleName, moduleTag} from "./utils/constants.js";
-
+import { moduleName, moduleTag } from './constants.js';
 
 // ------------------------------------------------------------------------
-//                              Exandria Settings 
+//                              Exandria Settings
 // ------------------------------------------------------------------------
-export const RegisterSettings = async function() {
-}
-
-
+export const RegisterSettings = async function () {};
 
 // ------------------------------------------------------------------------
 //                              Settings Helpers

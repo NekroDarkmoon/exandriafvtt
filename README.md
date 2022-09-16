@@ -1,6 +1,6 @@
 # Exandria - A Resource Trove
 
-The exandriafvtt module is mostly a content pack with some extra features. It showcases all the unoffical fan-made resources made for the lovely World of Exandria by the wonderful community at the [Exandria discord](https://discord.com/invite/Cj47Qgs). 
+The exandria-fvtt module is mostly a content pack with some extra features. It showcases all the unoffical fan-made resources made for the lovely World of Exandria by the wonderful community at the [Exandria discord](https://discord.com/invite/Cj47Qgs). 
 
 
 #### Contents
@@ -37,7 +37,7 @@ The module does have a few dependencies to help make the experience a bit better
 #### How do I install the Module?
 Paste the following link in the **Add-On Modules** tab in the **Install Module** Section and click install.
 
-`https://github.com/NekroDarkmoon/exandriafvtt/releases/latest/download/module.json`.
+`https://github.com/NekroDarkmoon/exandria-fvtt/releases/latest/download/module.json`.
 
 
 #### How do I import the data into my world?
