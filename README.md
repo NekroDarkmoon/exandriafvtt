@@ -15,10 +15,9 @@ The module currently includes a collection of the following:
 
 
 <hr />
-
-<sub>- Some of the maps in this module use assets from [Forgotten Adventures](https://www.forgotten-adventures.net/).</sub>
+<sub>- Some of the maps in this module use assets from [Forgotten Adventures](https://www.forgotten-adventures.net/).</sub><br/>
 <sub>- This module is created in compliance with WOTC's [fan content policy](https://company.wizards.com/en/legal/fancontentpolicy).</sub>
-
+<hr />
 
 ## Dependencies
 The module depends on a few critical modules to help make the experience a bit better for everyone.
@@ -36,7 +35,6 @@ Paste the following link in the **Add-On Modules** tab in the **Install Module**
 #### How do I import the data into my world?
 To properly import the compendiums open each compendium and use the "import folder structure" feature provided by **Compendium Folders**. Though it is recommended to just import the particular creature, scene or journal entry as you need them so as to keep the total file size of your world small.
 
-<hr />
 
 # Contributors
 The Contributors mentioned below are those that were directly responsible for the creation of the module. This is by no means an exhaustive list of the contributors that actually made this creation possible.
