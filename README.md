@@ -14,10 +14,6 @@ The module currently includes a collection of the following:
 - Additional Adventure Hooks to use in your world.
 
 
-<hr />
-<sub>- Some of the maps in this module use assets from [Forgotten Adventures](https://www.forgotten-adventures.net/).</sub><br/>
-<sub>- This module is created in compliance with WOTC's [fan content policy](https://company.wizards.com/en/legal/fancontentpolicy).</sub>
-<hr />
 
 ## Dependencies
 The module depends on a few critical modules to help make the experience a bit better for everyone.
@@ -42,3 +38,10 @@ The Contributors mentioned below are those that were directly responsible for th
 - NekroDarkmoon
 - TimorSol
 - The Wonderful people on the discord and reddit for making all the maps and the content.
+
+
+<hr />
+
+#### Licenses
+- Some of the maps in this module use assets from  [Forgotten Adventures](https://www.forgotten-adventures.net/) </br>
+- This module is created in compliance with WOTC's [fan content policy](https://company.wizards.com/en/legal/fancontentpolicy).
